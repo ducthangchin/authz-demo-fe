@@ -6,9 +6,9 @@ import useGetDocumentColumn from "@/hooks/document/useGetDocumentColumn";
 import { Button, Modal, Row, Space, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { ReloadOutlined, PlusOutlined } from "@ant-design/icons";
-import DocumentCreateForm from "@/components/DocumentCreateForm";
+import DocumentCreateForm from "@/components/document/DocumentCreateForm";
 import useDeleteDocument from "@/hooks/document/useDeleteDocument";
-import DocumentDetailForm from "@/components/DocumentDetailForm";
+import DocumentDetailForm from "@/components/document/DocumentDetailForm";
 
 const page = () => {
   const [isOpenCreateForm, setIsOpenCreateForm] = useState(false);

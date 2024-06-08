@@ -1,12 +1,14 @@
-import React from 'react'
-import Layout from '@/components/Layout'
+"use client";
+import React from "react";
+import Layout from "@/components/Layout";
+import UserRegistrationForm from "@/components/admin/UserRegistrationForm";
 
 const page = () => {
-    return (
-        <Layout>
-            <h1>Admin Page</h1>
-        </Layout>
-    )
-}
+  return (
+    <Layout>
+      <UserRegistrationForm />
+    </Layout>
+  );
+};
 
-export default page
+export default page;

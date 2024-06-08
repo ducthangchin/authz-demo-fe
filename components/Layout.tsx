@@ -1,13 +1,22 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { UserDetails } from "@/models/user";
+import { Tag, Typography } from "antd";
+import { ROLE_TAGS_COLOR } from "@/constants/RoleTag";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathName = usePathname();
+
+  const userDetail: UserDetails = useMemo(() => {
+    const user = localStorage.getItem("user");
+    if (user) return JSON.parse(user);
+    else return null;
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -16,11 +25,29 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  const getColor = (idx: number) =>
+    ROLE_TAGS_COLOR[idx % ROLE_TAGS_COLOR.length];
+
   return (
     <section className="bg-gray-500 dark:bg-sky-900">
       <div className="container relative mx-auto min-h-screen bg-white">
         <header className="w-full">
           <NavBar pathName={pathName} />
+          <div className="p-4">
+            <span className="flex space-x-4 text-xl">
+              <text className="font-bold">{userDetail?.fullName}</text>
+              <div>
+                {userDetail?.roles?.map((role, idx) => (
+                  <Tag key={idx} color={getColor(idx)}>
+                    {role}
+                  </Tag>
+                ))}
+              </div>
+            </span>
+            <Typography.Text type={"secondary"}>
+              ID: {userDetail?.id}
+            </Typography.Text>
+          </div>
         </header>
         <div className="p-4">{children}</div>
         <div className="absolute bottom-0 left-0 w-full text-center">
