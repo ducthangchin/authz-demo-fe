@@ -1,14 +1,14 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Layout from "@/components/Layout";
 import { UserDetails } from "@/models/user";
 import UserInfo from "@/components/UserInfo";
 
 const page = () => {
-  const userDetail: UserDetails = useMemo(() => {
+  const [userDetail, setUserDetail] = useState<UserDetails>();
+  useEffect(() => {
     const user = localStorage.getItem("user");
-    if (user) return JSON.parse(user);
-    else return null;
+    if (user) setUserDetail(JSON.parse(user));
   }, []);
 
   return (

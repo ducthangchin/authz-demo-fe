@@ -104,7 +104,7 @@ const UserRegistrationForm = () => {
           <Select
             mode="multiple"
             style={{ width: "100%" }}
-            placeholder="select one country"
+            placeholder="select roles"
             onChange={handleChange}
             options={options}
           />

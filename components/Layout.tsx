@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import { useRouter } from "next/navigation";
@@ -12,17 +12,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const userDetail: UserDetails = useMemo(() => {
-    const user = localStorage.getItem("user");
-    if (user) return JSON.parse(user);
-    else return null;
-  }, []);
+  const [userDetail, setUserDetail] = useState<UserDetails>();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/sign-in");
     }
+    const user = localStorage.getItem("user");
+    if (user) setUserDetail(JSON.parse(user));
   }, []);
 
   const getColor = (idx: number) =>
@@ -49,7 +47,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </Typography.Text>
           </div>
         </header>
-        <div className="p-4">{children}</div>
+        <div className="px-4 pb-8">{children}</div>
         <div className="absolute bottom-0 left-0 w-full text-center">
           <Footer />
         </div>

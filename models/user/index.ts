@@ -12,3 +12,18 @@ export interface UserCreateRequest {
   fullName: string;
   roles: number[];
 }
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  fullName: string;
+  roles: string[];
+  managerId?: number;
+  subordinateIds: number[];
+}
+
+export interface UserUpdateRequest {
+  fullName: string;
+  roles: number[];
+  manager?: number;
+}
