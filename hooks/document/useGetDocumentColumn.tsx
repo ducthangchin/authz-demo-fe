@@ -4,6 +4,7 @@ import type { TableProps } from "antd";
 import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { Document } from "@/models/document";
+import { LockTwoTone, UnlockTwoTone } from "@ant-design/icons";
 
 export interface DocumentColumnsProps {
   onDetail?: (id: number) => void;
@@ -44,6 +45,18 @@ const useGetDocumentColumn = (props?: DocumentColumnsProps) => {
         <p>{moment(updatedAt).format("DD/MM/YYYY HH:ss")}</p>
       ),
       align: "right",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "blocked",
+      key: "blocked",
+      render: (blocked: boolean) =>
+        blocked ? (
+          <LockTwoTone twoToneColor="#eb2f96"/>
+        ) : (
+          <UnlockTwoTone twoToneColor="#52c41a" />
+        ),
+      align: "center",
     },
     {
       title: "Hành động",

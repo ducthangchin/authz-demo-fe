@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Form, Input, Row, Space, Spin, message } from "antd";
+import { Button, Form, Input, Row, Space, Spin } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { SyncOutlined, SaveOutlined } from "@ant-design/icons";
 import useGetDocumentDetail from "@/hooks/document/useGetDocumentDetail";
 import useUpdateDocument from "@/hooks/document/useUpdateDocument";
+import { UnlockFilled, LockFilled } from "@ant-design/icons";
+import useBlockDocument from "@/hooks/document/useBlockDocument";
 
 export interface DocumentDetailFormProps {
   onClose?: () => void;
@@ -18,6 +20,7 @@ const DocumentDetailForm = (props: DocumentDetailFormProps) => {
 
   const { loading, document, getDocumentDetail } = useGetDocumentDetail();
   const { loading: isUpdating, updateDocument } = useUpdateDocument();
+  const { loading: isBlocking, blockDocument } = useBlockDocument();
 
   const [isEdited, setIsEdited] = useState(false);
 
@@ -43,7 +46,7 @@ const DocumentDetailForm = (props: DocumentDetailFormProps) => {
   }, [form, document]);
 
   const closeForm = () => {
-    props.onClose && props.onClose();
+    onClose && onClose();
   };
 
   const submitForm = () => {
@@ -58,6 +61,14 @@ const DocumentDetailForm = (props: DocumentDetailFormProps) => {
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
+      });
+  };
+
+  const changeDocumentStatus = (blocked: boolean) => {
+    id &&
+      blockDocument(id, blocked).then(() => {
+        onSuccess && onSuccess();
+        getDocumentDetail(id);
       });
   };
 
@@ -105,12 +116,15 @@ const DocumentDetailForm = (props: DocumentDetailFormProps) => {
             Lưu thay đổi
           </Button>
           <Button
-            danger
+            danger={!document?.blocked}
             type="primary"
-            onClick={closeForm}
-            icon={<SaveOutlined />}
+            disabled={loading || isUpdating || isBlocking}
+            onClick={() => {
+              changeDocumentStatus(!document?.blocked);
+            }}
+            icon={document?.blocked ? <UnlockFilled /> : <LockFilled />}
           >
-            Đóng
+            {document?.blocked ? "Mở khóa" : "Khóa truy cập"}
           </Button>
         </Space>
       </Row>

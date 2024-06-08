@@ -33,8 +33,8 @@ const page = () => {
 
   return (
     <Layout>
-      <h1>Document</h1>
-      <Row className="mb-1" justify={"end"}>
+      <Row className="mb-5" justify={"space-between"}>
+        <h1 className="text-lg font-bold">Tài liệu công ty</h1>
         <Space>
           <Button
             onClick={getAllDocuments}
