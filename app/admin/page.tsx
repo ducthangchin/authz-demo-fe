@@ -26,7 +26,7 @@ const page = () => {
   return (
     <Layout>
       <Tabs
-        defaultActiveKey={AdminTabKeys.manageUser}
+        defaultActiveKey={AdminTabKeys.createUser}
         tabPosition={"left"}
         items={TabItems}
       />
