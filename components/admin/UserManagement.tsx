@@ -7,6 +7,7 @@ import useGetProfile from "@/hooks/user/useGetProfile";
 import { compareArrays } from "@/utils/commons";
 import useUpdateUser from "@/hooks/user/useUpdateUser";
 import { UserUpdateRequest } from "@/models/user";
+import { ReloadOutlined } from "@ant-design/icons";
 
 const layout = {
   labelCol: { span: 8 },
@@ -136,6 +137,7 @@ const UserManagement = () => {
             showSearch
             placeholder="Tìm kiếm người dùng"
             filterOption={filterOption}
+            suffixIcon={<ReloadOutlined onClick={getUserProfiles} />}
           />
         </Form.Item>
         <Form.Item name="email" label="Email">
@@ -149,7 +151,12 @@ const UserManagement = () => {
           <Input disabled={!userId} />
         </Form.Item>
         <Form.Item name="manager" label="Quản lý">
-          <Select options={userOptions} loading={loading} disabled={!userId} />
+          <Select
+            options={userOptions}
+            loading={loading}
+            disabled={!userId}
+            suffixIcon={<ReloadOutlined onClick={getUserProfiles} />}
+          />
         </Form.Item>
         <Form.Item
           name="roles"
