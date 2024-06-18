@@ -156,6 +156,9 @@ const UserManagement = () => {
             loading={loading}
             disabled={!userId}
             suffixIcon={<ReloadOutlined onClick={getUserProfiles} />}
+            showSearch
+            placeholder="Tìm kiếm người dùng"
+            filterOption={filterOption}
           />
         </Form.Item>
         <Form.Item
